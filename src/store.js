@@ -37,3 +37,8 @@ db.sync({ force: true }).then(() =>
     ),
   ),
 );
+
+const Author = db.models.author;
+const Book = db.models.book;
+
+export { Author, Book };

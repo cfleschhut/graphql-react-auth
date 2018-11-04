@@ -1,49 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
-const { find, filter } = require('lodash');
-
-const books = [
-  {
-    id: 1,
-    title: 'The Trials of Brother Jero',
-    cover_image_url: '',
-    average_rating: 8,
-    author_id: 1,
-  },
-  {
-    id: 2,
-    title: 'Half of a Yellow Sun',
-    cover_image_url: '',
-    average_rating: 9,
-    author_id: 3,
-  },
-  {
-    id: 3,
-    title: 'Americanah',
-    cover_image_url: '',
-    average_rating: 9,
-    author_id: 3,
-  },
-  {
-    id: 4,
-    title: 'King Baabu',
-    cover_image_url: '',
-    average_rating: 7,
-    author_id: 1,
-  },
-  {
-    id: 5,
-    title: 'Children of Blood and Bone',
-    cover_image_url: '',
-    average_rating: 7,
-    author_id: 2,
-  },
-];
-
-const authors = [
-  { id: 1, first_name: 'Wole', last_name: 'Soyinka' },
-  { id: 2, first_name: 'Tomi', last_name: 'Adeyemi' },
-  { id: 3, first_name: 'Chimamanda', last_name: 'Adichie' },
-];
+const { Author, Book } = require('./store');
 
 const typeDefs = gql`
   type Book {
@@ -73,45 +29,35 @@ const typeDefs = gql`
       title: String!
       cover_image_url: String!
       average_rating: Float!
-      author_id: Int!
+      authorId: Int!
     ): Book!
   }
 `;
 
-let book_id = 5;
-let author_id = 3;
-
 const resolvers = {
   Query: {
-    books: () => books,
-    book: (_, { id }) => find(books, { id }),
-    authors: () => authors,
-    author: (_, { id }) => find(authors, { id }),
+    books: () => Book.findAll(),
+    book: (_, args) => Book.find({ where: args }),
+    authors: () => Author.findAll(),
+    author: (_, args) => Author.find({ where: args }),
   },
 
   Mutation: {
-    addBook: (_, { title, cover_image_url, average_rating, author_id }) => {
-      book_id++;
-
-      const newBook = {
-        id: book_id,
+    addBook: (_, { title, cover_image_url, average_rating, authorId }) =>
+      Book.create({
         title,
         cover_image_url,
         average_rating,
-        author_id,
-      };
-
-      books.push(newBook);
-      return newBook;
-    },
+        authorId,
+      }),
   },
 
   Book: {
-    author: book => find(authors, { id: book.author_id }),
+    author: book => book.getAuthor(),
   },
 
   Author: {
-    books: author => filter(books, { author_id: author.id }),
+    books: author => author.getBooks(),
   },
 };
 
