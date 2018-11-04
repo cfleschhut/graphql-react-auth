@@ -11,9 +11,12 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.1.0",
+    "casual": "^1.5.19",
     "esm": "^3.0.84",
     "graphql": "^14.0.2",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "sequelize": "^4.41.0",
+    "sqlite": "^3.0.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.5"
