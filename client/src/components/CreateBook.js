@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { gql } from 'apollo-boost';
 import { graphql, compose } from 'react-apollo';
+import { Heading, Form } from '@auth0/cosmos';
 
 const ADD_BOOK = gql`
   mutation AddBook(
@@ -77,54 +78,58 @@ class CreateBook extends Component {
     const { title, cover_image_url, average_rating, authorId } = this.state;
     const { authors } = this.props.data;
 
+    const selectOptions = authors
+      ? authors.map(author => ({
+          text: `${author.first_name} ${author.last_name}`,
+          value: author.id,
+        }))
+      : [];
+
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={this.handleChange}
-            placeholder="title"
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="text"
-            name="cover_image_url"
-            value={cover_image_url}
-            onChange={this.handleChange}
-            placeholder="cover image url"
-            required
-          />
-        </div>
-        <div>
-          <input
-            type="number"
-            name="average_rating"
-            value={average_rating}
-            onChange={this.handleChange}
-            placeholder="rating"
-            required
-            min={1}
-            max={5}
-          />
-        </div>
-        <div>
-          <select name="authorId" value={authorId} onChange={this.handleChange}>
-            {authors &&
-              authors.map(author => (
-                <option key={author.id} value={author.id}>
-                  {`${author.first_name} ${author.last_name}`}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <button>Add Book</button>
-        </div>
-      </form>
+      <>
+        <Heading size={2}>Add new book</Heading>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.FieldSet label="Book details">
+            <Form.TextInput
+              label="Title"
+              type="text"
+              name="title"
+              value={title}
+              onChange={this.handleChange}
+              placeholder="title"
+              required
+            />
+            <Form.TextInput
+              label="Cover image URL"
+              type="text"
+              name="cover_image_url"
+              value={cover_image_url}
+              onChange={this.handleChange}
+              placeholder="cover image url"
+              required
+            />
+            <Form.TextInput
+              label="Average rating"
+              type="number"
+              name="average_rating"
+              value={average_rating}
+              onChange={this.handleChange}
+              placeholder="rating"
+              required
+              min={1}
+              max={5}
+            />
+            <Form.Select
+              label="Author"
+              name="authorId"
+              value={authorId}
+              onChange={this.handleChange}
+              options={selectOptions}
+            />
+            <Form.Actions primaryAction={{ label: 'Add Book' }} />
+          </Form.FieldSet>
+        </Form>
+      </>
     );
   }
 }

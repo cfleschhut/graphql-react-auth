@@ -1,7 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Stack, Button } from '@auth0/cosmos';
+import { ButtonGroup, Button } from '@auth0/cosmos';
 import styled from '@auth0/cosmos/styled';
+
+const Container = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
+`;
 
 const Logo = styled.h1`
   a {
@@ -29,7 +38,7 @@ const StyledLink = styled(Link)`
 `;
 
 const NavBar = () => (
-  <Stack className="container" widths={[25, 50, 25]} align="space-between">
+  <Container align="space-between">
     <Logo>
       <Link to="/">CoolReads</Link>
     </Logo>
@@ -45,10 +54,11 @@ const NavBar = () => (
       </ul>
     </Nav>
 
-    <div>
-      <Button appearance="cta">Log In</Button>
-    </div>
-  </Stack>
+    <ButtonGroup>
+      <Button appearance="link">Log In</Button>
+      <Button appearance="cta">Sign Up</Button>
+    </ButtonGroup>
+  </Container>
 );
 
 export default NavBar;

@@ -24,7 +24,7 @@ BookModel.belongsTo(AuthorModel);
 casual.seed(123);
 
 db.sync({ force: true }).then(() =>
-  times(10, () =>
+  times(5, () =>
     AuthorModel.create({
       first_name: casual.first_name,
       last_name: casual.last_name,

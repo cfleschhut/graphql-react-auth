@@ -25,12 +25,14 @@ const ListBooks = () => (
       if (error) return `Error! ${error.message}`;
 
       return (
-        <div>
+        <>
           <Heading size={2}>All Books</Heading>
           <List>
             {data.books.map(book => (
               <div key={book.id}>
-                <Badge appearance="information">{book.average_rating}</Badge>
+                <Badge appearance="information">{`${
+                  book.average_rating
+                }/5`}</Badge>
                 <Heading size={3}>
                   {`${book.author.first_name} ${book.author.last_name}: ${
                     book.title
@@ -40,7 +42,7 @@ const ListBooks = () => (
               </div>
             ))}
           </List>
-        </div>
+        </>
       );
     }}
   </Query>
