@@ -32,7 +32,7 @@ db.sync({ force: true }).then(() =>
       author.createBook({
         title: casual.title,
         cover_image_url: casual.url,
-        average_rating: casual.integer(-10, 10),
+        average_rating: casual.integer(1, 5),
       }),
     ),
   ),

@@ -10,6 +10,10 @@ const LIST_BOOKS = gql`
       title
       cover_image_url
       average_rating
+      author {
+        first_name
+        last_name
+      }
     }
   }
 `;
@@ -27,7 +31,11 @@ const ListBooks = () => (
             {data.books.map(book => (
               <div key={book.id}>
                 <Badge appearance="information">{book.average_rating}</Badge>
-                <Heading size={3}>{book.title}</Heading>
+                <Heading size={3}>
+                  {`${book.author.first_name} ${book.author.last_name}: ${
+                    book.title
+                  }`}
+                </Heading>
                 <div>{book.cover_image_url}</div>
               </div>
             ))}
