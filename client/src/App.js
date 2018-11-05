@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import Nav from './components/Nav';
+import NavBar from './components/NavBar';
 import ListBooks from './components/ListBooks';
 import CreateBook from './components/CreateBook';
 
@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Nav />
+        <NavBar />
         <Route exact path="/" component={ListBooks} />
         <Route exact path="/create" component={CreateBook} />
       </div>

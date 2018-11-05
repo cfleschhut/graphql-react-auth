@@ -1,6 +1,7 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
+import { Heading, List, Badge } from '@auth0/cosmos';
 
 const LIST_BOOKS = gql`
   query AllBooks {
@@ -20,15 +21,18 @@ const ListBooks = () => (
       if (error) return `Error! ${error.message}`;
 
       return (
-        <ul>
-          {data.books.map(book => (
-            <li key={book.id}>
-              <h3>{book.title}</h3>
-              <div>{book.cover_image_url}</div>
-              <div>{book.average_rating}</div>
-            </li>
-          ))}
-        </ul>
+        <div>
+          <Heading size={2}>All Books</Heading>
+          <List>
+            {data.books.map(book => (
+              <div key={book.id}>
+                <Badge appearance="information">{book.average_rating}</Badge>
+                <Heading size={3}>{book.title}</Heading>
+                <div>{book.cover_image_url}</div>
+              </div>
+            ))}
+          </List>
+        </div>
       );
     }}
   </Query>
