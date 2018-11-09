@@ -65,16 +65,14 @@ const NavBar = props => {
 
       <ButtonGroup>
         {auth.isAuthenticated() ? (
-          <Button appearance="link" onClick={() => logout()}>
+          <Button appearance="secondary" onClick={() => logout()}>
             Log Out
           </Button>
         ) : (
-          <Button appearance="link" onClick={() => auth.login()}>
-            Log In
+          <Button appearance="cta" onClick={() => auth.login()}>
+            Log In / Sign up
           </Button>
         )}
-
-        <Button appearance="cta">Sign Up</Button>
       </ButtonGroup>
     </Container>
   );

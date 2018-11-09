@@ -10,6 +10,7 @@ class Auth {
       responseType: 'token id_token',
       scope: 'openid email',
     });
+    this.authFlag = 'isLoggedIn';
   }
 
   login = () => {
@@ -35,12 +36,11 @@ class Auth {
 
   setSession(authResult) {
     this.idToken = authResult.idToken;
-    console.log(this.idToken);
-
-    this.expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
+    localStorage.setItem(this.authFlag, JSON.stringify(true));
   }
 
   logout = () => {
+    localStorage.setItem(this.authFlag, JSON.stringify(false));
     this.auth0.logout({
       returnTo: 'http://localhost:3000',
       clientID: '1eL4Nux9VOOeV3YDzRiDT5TPck9jhFH3',
@@ -58,7 +58,7 @@ class Auth {
   }
 
   isAuthenticated = () => {
-    return new Date().getTime() < this.expiresAt;
+    return JSON.parse(localStorage.getItem(this.authFlag));
   };
 }
 
