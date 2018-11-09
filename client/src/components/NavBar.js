@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { ButtonGroup, Button } from '@auth0/cosmos';
 import styled from '@auth0/cosmos/styled';
+import auth from '../Auth';
 
 const Container = styled.header`
   display: flex;
@@ -37,28 +38,46 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const NavBar = () => (
-  <Container align="space-between">
-    <Logo>
-      <Link to="/">CoolReads</Link>
-    </Logo>
+const NavBar = props => {
+  const logout = () => {
+    auth.logout();
+    props.history.replace('/');
+  };
 
-    <Nav>
-      <ul>
-        <li>
-          <StyledLink to="/">All Books</StyledLink>
-        </li>
-        <li>
-          <StyledLink to="/create">Add new Book</StyledLink>
-        </li>
-      </ul>
-    </Nav>
+  return (
+    <Container align="space-between">
+      <Logo>
+        <Link to="/">CoolReads</Link>
+      </Logo>
 
-    <ButtonGroup>
-      <Button appearance="link">Log In</Button>
-      <Button appearance="cta">Sign Up</Button>
-    </ButtonGroup>
-  </Container>
-);
+      <Nav>
+        <ul>
+          <li>
+            <StyledLink to="/">All Books</StyledLink>
+          </li>
+          {auth.isAuthenticated() && (
+            <li>
+              <StyledLink to="/create">Add new Book</StyledLink>
+            </li>
+          )}
+        </ul>
+      </Nav>
 
-export default NavBar;
+      <ButtonGroup>
+        {auth.isAuthenticated() ? (
+          <Button appearance="link" onClick={() => logout()}>
+            Log Out
+          </Button>
+        ) : (
+          <Button appearance="link" onClick={() => auth.login()}>
+            Log In
+          </Button>
+        )}
+
+        <Button appearance="cta">Sign Up</Button>
+      </ButtonGroup>
+    </Container>
+  );
+};
+
+export default withRouter(NavBar);

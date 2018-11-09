@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import styled from '@auth0/cosmos/styled';
 import NavBar from './components/NavBar';
 import ListBooks from './components/ListBooks';
 import CreateBook from './components/CreateBook';
-import styled from '@auth0/cosmos/styled';
+import Callback from './components/Callback';
 
 const Container = styled.main`
   width: 90%;
@@ -16,6 +17,7 @@ const App = () => (
     <NavBar />
     <Route exact path="/" component={ListBooks} />
     <Route exact path="/create" component={CreateBook} />
+    <Route exact path="/callback" component={Callback} />
   </Container>
 );
 

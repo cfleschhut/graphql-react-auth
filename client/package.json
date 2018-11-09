@@ -5,6 +5,7 @@
   "dependencies": {
     "@auth0/cosmos": "^0.7.2",
     "apollo-boost": "^0.1.20",
+    "auth0-js": "^9.8.1",
     "graphql": "^14.0.2",
     "react": "^16.6.0",
     "react-apollo": "^2.2.4",
