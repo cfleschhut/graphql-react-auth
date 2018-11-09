@@ -1,5 +1,24 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer, gql, AuthenticationError } = require('apollo-server');
+const jwt = require('jsonwebtoken');
+const jwksClient = require('jwks-rsa');
 const { Author, Book } = require('./store');
+
+const client = jwksClient({
+  jwksUri: 'https://cfl.eu.auth0.com/.well-known/jwks.json',
+});
+
+const getKey = (header, cb) => {
+  client.getSigningKey(header.kid, (err, key) => {
+    const signingKey = key.publicKey || key.rsaPublicKey;
+    cb(null, signingKey);
+  });
+};
+
+const options = {
+  audience: '1eL4Nux9VOOeV3YDzRiDT5TPck9jhFH3',
+  issuer: 'https://cfl.eu.auth0.com/',
+  algorithms: ['RS256'],
+};
 
 const typeDefs = gql`
   type Book {
@@ -43,13 +62,25 @@ const resolvers = {
   },
 
   Mutation: {
-    addBook: (_, { title, cover_image_url, average_rating, authorId }) =>
-      Book.create({
-        title,
-        cover_image_url,
-        average_rating,
-        authorId,
-      }),
+    addBook: async (
+      _,
+      { title, cover_image_url, average_rating, authorId },
+      { user },
+    ) => {
+      try {
+        const email = await user;
+        const book = await Book.create({
+          title,
+          cover_image_url,
+          average_rating,
+          authorId,
+        });
+
+        return book;
+      } catch (e) {
+        throw new AuthenticationError('You must be logged in to add a book');
+      }
+    },
   },
 
   Book: {
@@ -64,6 +95,20 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => {
+    const token = req.headers.authorization;
+    const user = new Promise((resolve, reject) => {
+      jwt.verify(token, getKey, options, (err, decoded) => {
+        if (err) {
+          return reject(err);
+        }
+
+        resolve(decoded.email);
+      });
+    });
+
+    return { user };
+  },
 });
 
 server.listen().then(({ url }) => {
