@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import ListBooks from './components/ListBooks';
 import CreateBook from './components/CreateBook';
 import Callback from './components/Callback';
+import GuardedRoute from './components/GuardedRoute';
 import auth from './Auth';
 
 const Container = styled.main`
@@ -30,7 +31,7 @@ class App extends Component {
       <Container>
         <NavBar />
         <Route exact path="/" component={ListBooks} />
-        <Route exact path="/create" component={CreateBook} />
+        <GuardedRoute exact path="/create" component={CreateBook} />
         <Route exact path="/callback" component={Callback} />
       </Container>
     );
