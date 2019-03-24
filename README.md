@@ -1,11 +1,45 @@
-## JWT-based authentication demo app using GraphQL Apollo, Auth0 & React
+# JWT-based authentication demo app using GraphQL Apollo, Auth0 & React
 
-Build with
+## Build with
 
 - [Apollo Server](https://www.apollographql.com/server/)
 - [Apollo Client](https://www.apollographql.com/client/)
+- [Auth0 Cosmos UI](https://auth0-cosmos.now.sh/)
+- [Create-React-App](https://github.com/facebook/create-react-app)
+- [Sequelize ORM](http://docs.sequelizejs.com/)
 - [Auth0 Node SDK](https://github.com/auth0/node-jsonwebtoken)
 - [Auth0 JS SDK](https://github.com/auth0/auth0.js)
-- [Auth0 Cosmos UI](https://auth0-cosmos.now.sh/)
-- [Sequelize ORM](http://docs.sequelizejs.com/)
-- [Create-React-App](https://github.com/facebook/create-react-app)
+
+## Getting started
+
+### Using Docker
+
+```bash
+docker-compose up
+```
+
+### Install manually
+
+#### Run API
+
+```bash
+# Install dependencies
+# Start GraphQL API
+
+cd api && npm install
+npm start
+
+# Open API docs at http://localhost:4000/
+```
+
+#### Run client
+
+```bash
+# Install dependencies
+# Start React UI
+
+cd client && npm install
+npm start
+
+# Open UI at http://localhost:3000/
+```
