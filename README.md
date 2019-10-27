@@ -12,15 +12,15 @@
 
 ## Getting started
 
-### Using Docker
+### Option A: Using Docker
 
 ```bash
 docker-compose up
 ```
 
-### Install manually
+### Option B: Install manually
 
-#### Run API
+#### 1. Run API
 
 ```bash
 # Install dependencies
@@ -32,7 +32,7 @@ npm start
 # Open API docs at http://localhost:4000/
 ```
 
-#### Run client
+#### 2. Run client
 
 ```bash
 # Install dependencies
