@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.1.0",
+    "apollo-server": "^2.14.2",
     "casual": "^1.5.19",
     "esm": "^3.0.84",
     "graphql": "^14.0.2",
